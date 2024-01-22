@@ -1286,6 +1286,7 @@ local function set_editor_opts(t)
 end
 local function restore_editor_opts()
   for key, val in pairs(state.saved_editor_opts) do
+<<<<<<< HEAD
     if ((_G.type(key) == "table") and (key[1] == "w") and (nil ~= key[2]) and (nil ~= key[3])) then
       local w = key[2]
       local name = key[3]
@@ -1296,6 +1297,25 @@ local function restore_editor_opts()
       api.nvim_buf_set_option(b, name, val)
     elseif (nil ~= key) then
       local name = key
+=======
+    local _200_ = key
+    if ((_G.type(_200_) == "table") and ((_200_)[1] == "w") and (nil ~= (_200_)[2]) and (nil ~= (_200_)[3])) then
+      local w = (_200_)[2]
+      local name = (_200_)[3]
+      if api.nvim_win_is_valid(w) then
+        api.nvim_win_set_option(w, name, val)
+      else
+      end
+    elseif ((_G.type(_200_) == "table") and ((_200_)[1] == "b") and (nil ~= (_200_)[2]) and (nil ~= (_200_)[3])) then
+      local b = (_200_)[2]
+      local name = (_200_)[3]
+      if api.nvim_buf_is_valid(b) then
+        api.nvim_buf_set_option(b, name, val)
+      else
+      end
+    elseif (nil ~= _200_) then
+      local name = _200_
+>>>>>>> origin/telescope-integration
       api.nvim_set_option(name, val)
     else
     end
@@ -1303,6 +1323,7 @@ local function restore_editor_opts()
   return nil
 end
 local temporary_editor_opts = {["w.conceallevel"] = 0, ["g.scrolloff"] = 0, ["w.scrolloff"] = 0, ["g.sidescrolloff"] = 0, ["w.sidescrolloff"] = 0, ["b.modeline"] = false}
+<<<<<<< HEAD
 local function set_concealed_label()
   if ((vim.fn.has("nvim-0.9.1") == 1) and api.nvim_get_hl(0, {name = "LeapLabelPrimary"}).bg and api.nvim_get_hl(0, {name = "LeapLabelSecondary"}).bg) then
     opts.concealed_label = " "
@@ -1320,4 +1341,14 @@ local function _213_()
   return restore_editor_opts()
 end
 api.nvim_create_autocmd("User", {pattern = "LeapLeave", callback = _213_, group = "LeapDefault"})
+=======
+local function _204_()
+  return set_editor_opts(temporary_editor_opts)
+end
+api.nvim_create_autocmd("User", {pattern = "LeapEnter", callback = _204_, group = "LeapDefault"})
+local function _205_()
+  return restore_editor_opts()
+end
+api.nvim_create_autocmd("User", {pattern = "LeapLeave", callback = _205_, group = "LeapDefault"})
+>>>>>>> origin/telescope-integration
 return {state = state, leap = leap}

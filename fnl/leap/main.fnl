@@ -1066,8 +1066,8 @@ an autojump. (In short: always err on the safe side.)
 (fn restore-editor-opts []
   (each [key val (pairs state.saved_editor_opts)]
     (case key
-      [:w w name] (api.nvim_win_set_option w name val)
-      [:b b name] (api.nvim_buf_set_option b name val)
+      [:w w name] (when (api.nvim_win_is_valid w) (api.nvim_win_set_option w name val))
+      [:b b name] (when (api.nvim_buf_is_valid b) (api.nvim_buf_set_option b name val))
       name (api.nvim_set_option name val))))
 
 
